@@ -10,7 +10,12 @@ pipeline {
       steps {
         sh '''
         sudo docker build -t whgnlwp2011/testweb:newnewmain .
-        sudo docker push whgnlwp2011/testweb:newnewmain
+        sudo docker build -f Dockerfileshop -t whgnlwp2011/testweb:newnewshop .
+        sudo docker build -f Dockerfileblog -t whgnlwp2011/testweb:newnewblog .
+         
+	sudo docker push whgnlwp2011/testweb:newnewmain
+	sudo docker push whgnlwp2011/testweb:newnewshop
+	sudo docker push whgnlwp2011/testweb:newnewblog
         '''
       }
     }
@@ -18,6 +23,8 @@ pipeline {
       steps {
         sh '''
 	sudo kubectl set image deployment deploy-main ctn-main=whgnlwp2011/testweb:newnewmain
+	sudo kubectl set image deployment deploy-shop ctn-main=whgnlwp2011/testweb:newnewshop
+	sudo kubectl set image deployment deploy-blog ctn-main=whgnlwp2011/testweb:newnewblog
         '''
       }
     }
